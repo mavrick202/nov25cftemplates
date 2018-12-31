@@ -84,7 +84,7 @@
 			"Properties": {
 				"Tags": [{
 					"Key": "Name",
-					"Value": "IGW"
+					"Value": {"Ref":"VPCNAME"}
 				},
 				{
 					"Key": "CloudFormationStack",
@@ -218,7 +218,22 @@
 					}
 				}]
 			}
-		}
+		},
+		"WebServer": {
+          "Type": "AWS::EC2::Instance",  
+          "Properties": {
+          "ImageId"            : "ami-0080e4c5bc078760e",
+          "InstanceType"       : "t2.micro",
+          "KeyName"            : "LaptopKey",
+          "NetworkInterfaces" : [{
+          "AssociatePublicIpAddress" : "true",
+          "DeviceIndex"              : "0",
+          "DeleteOnTermination"      : "true",
+          "SubnetId"                 : {"Ref":"PublicSubnet"},
+          "GroupSet"                 : [ "sg-051dc8f821ba250a7" ]
+		  }]
+      }
+    }
 	},
 	"Outputs": {
 		"VPCId": {
